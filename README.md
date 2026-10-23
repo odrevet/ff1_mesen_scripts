@@ -18,7 +18,9 @@ Uses the map ID and character ID to look up the NPC in `ai/prompts.lua`. When a 
 
 1. The original dialog tiles are blanked as the game draws them, and the full original text is captured.
 2. A prompt is built from the general prompt, the character prompt and the original text, then sent to a local LLM.
-3. The LLM answer is written over the dialog box.
+3. The LLM answer is written over the dialog box as in-game text: the blanked
+   tiles are filled with the answer, and each line can extend over the blank
+   tiles that follow it.
 
 Only NPCs listed in `prompts.lua` and standing next to the player are affected. Other dialogs are left untouched.
 
