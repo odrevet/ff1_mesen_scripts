@@ -24,6 +24,8 @@ Uses the map ID and character ID to look up the NPC in `ai/prompts.lua`. When a 
 
 Only NPCs listed in `prompts.lua` and standing next to the player are affected. Other dialogs are left untouched.
 
+For a short guide on setting up the LLM locally, see [llm_setup.md](llm_setup.md).
+
 ## Configuration
 
 `ai/prompts.lua` is a Lua file returning a table:
