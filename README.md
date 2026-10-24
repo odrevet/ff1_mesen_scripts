@@ -2,19 +2,13 @@
 
 Lua scripts for the Mesen emulator that hook into Final Fantasy 1 to read NPC dialogue, identify who is speaking, and (work in progress) let a local LLM rewrite what they say.
 
-## Scripts
+## Video
 
-### Dialog capture (`intercept_dialog/intercept_dialog.lua`)
+Demo: [Watch on YouTube](https://www.youtube.com/watch?v=1IbaTXgvR_4)
 
-Intercepts the text the game displays and prints it to the Mesen script console.
+## Run
 
-### Dialog capture with IDs (`intercept_dialog/intercept_dialog_with_id.lua`)
-
-Same as above, and also reports where the text comes from: the current map ID and the ID of the NPC speaking.
-
-### AI (`ai/run.lua`)
-
-Uses the map ID and character ID to look up the NPC in `ai/prompts.lua`. When a configured NPC talks:
+Uses the map ID and character ID to look up the NPC in `prompts.lua`. When a configured NPC talks:
 
 1. The original dialog tiles are blanked as the game draws them, and the full original text is captured.
 2. A prompt is built from the general prompt, the character prompt and the original text, then sent to a local LLM.
@@ -28,7 +22,7 @@ For a short guide on setting up the LLM locally, see [llm_setup.md](llm_setup.md
 
 ## Configuration
 
-`ai/prompts.lua` is a Lua file returning a table:
+`prompts.lua` is a Lua file returning a table:
 
     return {
       -- Sent every time, before the character prompt and the original text
@@ -48,13 +42,13 @@ Map and character IDs are the ones printed in the console (`KEY: 00:50` is map `
 
 Run the script from the repository root by passing it after the path to your ROM:
 
-    Mesen "/path/to/Final_Fantasy_(USA).zip" ai/run.lua
+    Mesen "/path/to/Final_Fantasy_(USA).zip" run.lua
 
 The AI script looks for `prompts.lua` in this order:
 
 1. next to the script, then Mesen's script data folder (`~/.config/Mesen2/LuaScriptData/run/`)
 2. the path in the `FF1_PROMPTS` environment variable
-3. `$PWD/ai/prompts.lua`, so run Mesen from the repository root
+3. `$PWD/prompts.lua`, so run Mesen from the repository root
 
 The console prints the path it loaded, or every path it tried if none was found.
 
