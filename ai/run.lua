@@ -1,4 +1,5 @@
-﻿-- Entry point of the FF1 AI script. Holds the settings you may want to tweak,
+﻿
+-- Entry point of the FF1 AI script. Holds the settings you may want to tweak,
 -- loads the modules from ai/lib/ and registers the Mesen callbacks.
 
 local C = {

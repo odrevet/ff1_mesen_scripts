@@ -132,7 +132,7 @@ end
 
 -- Fake answer used when config.lua sets fake = true or has no url
 local function fakeLLM(map, off)
-  return string.format("WIP %02X %02X", map, off)
+  return string.format("%02X %02X", map, off)
 end
 
 -- Returns the text the NPC should say, or nil on failure

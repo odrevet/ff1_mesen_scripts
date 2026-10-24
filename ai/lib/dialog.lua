@@ -7,16 +7,31 @@ local isBorder, encode = ff1.isBorder, ff1.encode
 
 local M = {}
 
+local NT_ROWS = 30
+
+-- Address of the tile one row below / above, wrapping inside the nametable
+-- (the nametable has 30 rows, the map scrolls vertically so a box can
+-- cross from row 29 back to row 0).
+local function rowDown(a)
+  if ((a >> 5) & 31) >= NT_ROWS - 1 then return a - (NT_ROWS - 1) * 32 end
+  return a + 32
+end
+
+local function rowUp(a)
+  if ((a >> 5) & 31) == 0 then return a + (NT_ROWS - 1) * 32 end
+  return a - 32
+end
+
 -- Find the usable part of the dialog box around the first captured text tile.
 -- The box interior is everything between the border tiles, whatever the
--- tiles currently there. The box can cross into the other nametable (the
--- map scrolls horizontally), so scans follow nextAddr/prevAddr.
--- Returns the address of the first interior tile, the width and the height.
+-- tiles currently there. Horizontal scans follow nextAddr/prevAddr, vertical
+-- scans follow rowUp/rowDown. Both wrap around the nametable.
+-- Returns the address of the first interior tile (top left), the width
+-- and the height.
 local function dialogArea(addrs)
   local a = addrs[1]
-  local row = (a >> 5) & 31
 
-  -- Left edge
+  -- Left edge (on the row of the captured tile)
   local first = a
   for _ = 1, 31 do
     local p = prevAddr(first)
@@ -31,13 +46,27 @@ local function dialogArea(addrs)
     x = nextAddr(x)
   end
 
-  -- Bottom edge
-  local lines = 1
-  while row + lines <= 29 and not isBorder(tile(a + lines * 32)) do
-    lines = lines + 1
+  -- Top edge: go up until the tile above is a border
+  local up, p = 0, a
+  while up < NT_ROWS - 1 do
+    local q = rowUp(p)
+    if isBorder(tile(q)) then break end
+    p = q
+    up = up + 1
   end
 
-  return first, width, lines
+  -- Bottom edge: go down until the tile below is a border
+  local down
+  down, p = 0, a
+  while up + down < NT_ROWS - 1 do
+    local q = rowDown(p)
+    if isBorder(tile(q)) then break end
+    p = q
+    down = down + 1
+  end
+
+  for _ = 1, up do first = rowUp(first) end
+  return first, width, up + down + 1
 end
 
 -- Fit the words of text into `lines` lines of `width` characters. Returns
@@ -74,15 +103,17 @@ function M.writeBox(first, width, lines, text)
   if leftover then
     emu.log("LLM answer does not fully fit in dialog box (" .. width .. "x" .. lines .. ")")
   end
+  local rowStart = first
   for li = 1, lines do
     local line = out[li] or ""
-    local a = first + (li - 1) * 32
+    local a = rowStart
     for k = 1, width do
       local c = line:sub(k, k)
       if c == "" then c = " " end
       writeTile(a, encode(c))
       a = nextAddr(a)
     end
+    rowStart = rowDown(rowStart)
   end
 end
 
