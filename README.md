@@ -14,7 +14,7 @@ Beyond rewriting the original line, you can open a chat box and talk to the NPC.
 * `ESC` closes the chat box
 * `Backspace` erases text in the entry
 
-Both keys clash with default Mesen shortcuts, see [Rebind the Mesen shortcuts](#rebind-the-mesen-shortcuts).
+Both keys clash with default Mesen shortcuts, see `Rebind the Mesen shortcuts`.
 
 ## Setup
 
