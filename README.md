@@ -4,8 +4,7 @@ Lua scripts for the Mesen emulator that capture and rewrite the NPC dialogues of
 
 ## Video
 
-Demo: [Watch on YouTube](https://www.youtube.com/watch?v=1IbaTXgvR_4)
-
+[![Watch on YouTube](https://img.youtube.com/vi/1IbaTXgvR_4/hqdefault.jpg)](https://www.youtube.com/watch?v=1IbaTXgvR_4)
 
 ### Chat with the NPCs
 
