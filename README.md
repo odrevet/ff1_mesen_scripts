@@ -8,7 +8,7 @@ Lua scripts for the Mesen emulator that capture and rewrite the NPC dialogues of
 
 ### Chat with the NPCs
 
-Beyond rewriting the original line, you can open a chat box and talk to the NPC. Your message is sent to the LLM with the NPC prompt and the chat prompt (`chat` in `prompts.lua`), and the answer is shown in the dialog box.
+Beyond rewriting the original line, you can open a chat box and talk to the NPC. Your message is sent to the LLM with the NPC prompt and the chat prompt, and the answer is shown in the dialog box.
 
 * `ESC` closes the chat box
 * `Backspace` erases text in the entry
