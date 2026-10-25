@@ -30,8 +30,10 @@ Script > Settings > Script Window > Restrictions
 
 * Allow access to I/O and OS functions
 * Allow network access
+* Set the Maximum execution time to more than 1 second, like not showed in the screenshot
 
 ![Script restrictions](screenshots/debugger_settings.png)
+
 
 ### 3. Rebind the Mesen shortcuts
 
