@@ -67,3 +67,13 @@ Run from the repository root, passing the script after the path to your ROM:
     }
 
 Map and character IDs are the ones printed in the console (`KEY: 00:50` is map `0x00`, character `0x50`). Talk to an NPC to find its IDs.
+
+## Notes and limitations
+
+The quality of the dialogues depends entirely on the LLM and on your configuration. This is experimental: the output is not always accurate, and it can occasionally break the game.
+
+Gemma 4 already knows part of the FF1 lore without any extra prompt, but giving it more context improves the results. For example, a prompt describing the current location, or more detail about each NPC, makes the dialogues more consistent.
+
+### Ideas
+
+The LLM could do more than talk. Since the script runs inside the emulator, an NPC could trigger Lua code too give or take money and items or even advance the story !
