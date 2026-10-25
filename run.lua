@@ -14,6 +14,7 @@ local C = {
   MAX_TALK_DIST  = 24,    -- max pixel distance (|dx|+|dy|) between player and talking NPC
 
   -- Chat with the NPC (keyboard input drawn as an overlay)
+  CHAT           = true,  -- open a chat with the NPC after its dialog is replaced
   DEBUG_KEYS     = false, -- log every key detected while typing (to check the key names)
   MAX_INPUT      = 64    -- max characters of a player message
 }

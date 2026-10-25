@@ -102,7 +102,7 @@ local function flush()
       -- Write the answer over the blanked tiles, as in-game text
       local first, width, lines = dialog.writeAnswer(addrs, out)
       emu.log("REPLACED: " .. out)
-      if first then
+      if first and C.CHAT then
         -- Open a chat session: the conversation starts with this answer
         state.session = {
           first = first, width = width, lines = lines,
