@@ -1,24 +1,54 @@
 # Mesen scripts for Final Fantasy 1 (NES, USA)
 
-Lua scripts for the Mesen emulator that hook into Final Fantasy 1 to read NPC dialogue, identify who is speaking, and (work in progress) let a local LLM rewrite what they say.
+Lua scripts for the Mesen emulator that capture and rewrite the NPC dialogues of Final Fantasy 1 using a local LLM backend. Each NPC gets a personality prompt, the original line is sent to the LLM, and the answer is drawn back into the game's dialog box as in-game text. You can also chat with the NPCs.
 
 ## Video
 
 Demo: [Watch on YouTube](https://www.youtube.com/watch?v=1IbaTXgvR_4)
 
-## Run
 
-Uses the map ID and character ID to look up the NPC in `prompts.lua`. When a configured NPC talks:
+### Chat with the NPCs
 
-1. The original dialog tiles are blanked as the game draws them, and the full original text is captured.
-2. A prompt is built from the general prompt, the character prompt and the original text, then sent to a local LLM.
-3. The LLM answer is written over the dialog box as in-game text: the blanked
-   tiles are filled with the answer, and each line can extend over the blank
-   tiles that follow it.
+Beyond rewriting the original line, you can open a chat box and talk to the NPC. Your message is sent to the LLM with the NPC prompt and the chat prompt (`chat` in `prompts.lua`), and the answer is shown in the dialog box.
 
-Only NPCs listed in `prompts.lua` and standing next to the player are affected. Other dialogs are left untouched.
+* `ESC` closes the chat box
+* `Backspace` erases text in the entry
 
-For a short guide on setting up the LLM locally, see [llm_setup.md](llm_setup.md).
+Both keys clash with default Mesen shortcuts, see [Rebind the Mesen shortcuts](#rebind-the-mesen-shortcuts).
+
+## Setup
+
+### 1. Install Mesen
+
+Use [Mesen CE](https://github.com/nesdev-org/MesenCE). You also need a Final Fantasy (USA) ROM.
+
+### 2. Allow I/O and network access
+
+The script reads `prompts.lua` from disk and talks to a local LLM, so it needs I/O and network access. In Mesen:
+
+Script > Settings > Script Window > Restrictions
+
+* Allow access to I/O and OS functions
+* Allow network access
+
+![Script restrictions](screenshoots/debugger_settings.png)
+
+### 3. Rebind the Mesen shortcuts
+
+`ESC` closes the chat box and `Backspace` is used while typing, but Mesen uses them for Pause and Rewind by default. Rebind both Mesen shortcuts to other keys so they do not trigger while you chat.
+
+![Shortcut keys](screenshoots/key_shortcuts.png)
+
+### 4. Set up the LLM
+
+See [llm_setup.md](llm_setup.md) for a short guide to running the LLM locally.
+
+### 5. Run
+
+Run from the repository root, passing the script after the path to your ROM:
+
+    Mesen "/path/to/Final_Fantasy_(USA).zip" run.lua
+
 
 ## Configuration
 
@@ -36,27 +66,4 @@ For a short guide on setting up the LLM locally, see [llm_setup.md](llm_setup.md
       },
     }
 
-Map and character IDs are the ones printed in the console (`KEY: 00:50` is map `0x00`, character `0x50`). Talk to an NPC with the capture script to find its IDs.
-
-## Usage
-
-Run the script from the repository root by passing it after the path to your ROM:
-
-    Mesen "/path/to/Final_Fantasy_(USA).zip" run.lua
-
-The AI script looks for `prompts.lua` in this order:
-
-1. next to the script, then Mesen's script data folder (`~/.config/Mesen2/LuaScriptData/run/`)
-2. the path in the `FF1_PROMPTS` environment variable
-3. `$PWD/prompts.lua`, so run Mesen from the repository root
-
-The console prints the path it loaded, or every path it tried if none was found.
-
-## Requirements
-
-The AI script reads `prompts.lua` from disk and will talk to a local LLM, so it needs I/O and network access. Enable both in Mesen:
-
-Script > Settings > Script Window > Restrictions
-
-* Allow access to I/O and OS functions
-* Allow network access
+Map and character IDs are the ones printed in the console (`KEY: 00:50` is map `0x00`, character `0x50`). Talk to an NPC to find its IDs.
