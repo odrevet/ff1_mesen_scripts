@@ -31,13 +31,13 @@ Script > Settings > Script Window > Restrictions
 * Allow access to I/O and OS functions
 * Allow network access
 
-![Script restrictions](screenshoots/debugger_settings.png)
+![Script restrictions](screenshots/debugger_settings.png)
 
 ### 3. Rebind the Mesen shortcuts
 
 `ESC` closes the chat box and `Backspace` is used while typing, but Mesen uses them for Pause and Rewind by default. Rebind both Mesen shortcuts to other keys so they do not trigger while you chat.
 
-![Shortcut keys](screenshoots/key_shortcuts.png)
+![Shortcut keys](screenshots/key_shortcuts.png)
 
 ### 4. Set up the LLM
 
